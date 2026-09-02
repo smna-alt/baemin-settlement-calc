@@ -72,7 +72,7 @@ body{
   color:var(--ink); background:var(--bg); font-size:16px; line-height:1.5;
   -webkit-text-size-adjust:100%;
 }
-.wrap{max-width:400px;margin:0 auto;padding:24px 20px 48px}
+.wrap{max-width:380px;margin:0 auto;padding:24px 20px 48px}
 /* 탭 */
 .tabs{display:flex;gap:24px;margin:0 0 4px;border-bottom:1px solid var(--line)}
 .tab{background:none;border:0;padding:12px 0 14px;font:inherit;font-size:16px;font-weight:500;
@@ -134,11 +134,12 @@ dialog .ok:hover{background:var(--blue-dark)}
 .readout .v{font-size:16px;font-weight:700;white-space:nowrap}
 
 /* 자주 쓰는 금액 빠른 선택 */
-.chips{display:flex;gap:6px;margin-top:8px}
-/* 폭을 4등분해 좁은 화면에서도 한 줄을 유지한다 */
-.chips button{flex:1 1 0;min-width:0;padding:8px 4px;text-align:center;
+.chips{display:flex;gap:4px;margin-top:8px}
+/* 폭을 나눠 갖되 글자는 절대 줄바꿈하지 않는다 — '원'만 다음 줄로 내려가면 흉하다 */
+.chips button{flex:1 1 0;min-width:0;padding:8px 2px;text-align:center;white-space:nowrap;
   border:1px solid var(--line);border-radius:var(--r);
-  background:var(--white);font:inherit;font-size:13px;color:var(--ink-56);cursor:pointer;
+  background:var(--white);font:inherit;font-size:12px;letter-spacing:-.03em;
+  color:var(--ink-56);cursor:pointer;
   font-variant-numeric:tabular-nums;transition:border-color .12s}
 .chips button:hover{border-color:var(--ink-36);color:var(--ink)}
 .chips button[aria-pressed="true"]{border-color:var(--blue);background:var(--blue-bg);
@@ -187,7 +188,6 @@ dialog .ok:hover{background:var(--blue-dark)}
       <select id="tier" aria-label="배민배달 매출 규모"></select>
       <div class="rate is-static">
         <span class="pct" id="rateReadout">7.8%</span>
-        <span class="cap">주문 건당 부과돼요</span>
       </div>
       <p class="hint" id="rateHint"></p>
     </div>
@@ -198,9 +198,8 @@ dialog .ok:hover{background:var(--blue-dark)}
       <select id="region" aria-label="가게 지역"></select>
       <div class="rate is-static">
         <span class="pct" id="feeReadout">3,400원</span>
-        <span class="cap">주문 건당 부과돼요</span>
       </div>
-      <p class="hint">매출 규모와 지역에 따라 배민이 할인을 적용한 금액이에요</p>
+      <p class="hint">매출 규모와 지역에 따라 적용된 금액이에요</p>
     </div>
 
     <div class="field" id="tipField">
@@ -226,7 +225,7 @@ dialog .ok:hover{background:var(--blue-dark)}
       <label for="discount">파트너 부담 할인 <span class="sub">(선택)</span></label>
       <div class="ctrl"><input id="discount" inputmode="numeric" placeholder="0" autocomplete="off"><span class="unit">원</span></div>
       <div class="chips" id="discountChips"></div>
-      <p class="hint">고객에게 제공하는 할인으로 파트너님이 부담하는 금액이에요</p>
+      <p class="hint">파트너님이 고객에게 제공하는 할인 금액이에요.</p>
     </div>
 
     <div class="actions">
@@ -285,10 +284,10 @@ var REGIONS = [
 // 주문 유형별 구성
 var TYPES = {
   baemin: { tiers:BAEMIN_TIERS, region:true,
-            hint:'셀프서비스 &gt; 배민배달 매출 규모 분류에서 확인할 수 있어요' },
+            hint:'셀프서비스&gt;배민배달 매출 규모 분류에서 확인할 수 있어요' },
   // 가게배달 배달비는 파트너님이 대행사에 직접 지불한다. 배민이 받지 않으니 정산에서 빠지지 않는다
-  store:  { tiers:[{ rate:.068, cap:'주문 건당 부과돼요' }], region:false, tipInput:true },
-  pickup: { tiers:[{ rate:.068, cap:'주문 건당 부과돼요' }], region:false }
+  store:  { tiers:[{ rate:.068 }], region:false, tipInput:true },
+  pickup: { tiers:[{ rate:.068 }], region:false }
 };
 // 결제정산수수료 — 가이드에는 없고 셀프서비스 정산정보 화면에서 역산했다.
 // 54,000원 주문에 1,620원 = 정확히 3.0%. 공식 요율표를 받으면 이 값을 확인할 것.
@@ -474,15 +473,11 @@ $('#form').addEventListener('submit', function(e){
   $('#settle').classList.toggle('minus', o.settle < 0);
 
   var lines = [['주문금액', price]];
-  // 할인을 걸면 이용료 기준이 줄어든다는 걸 눈으로 보이게 한 줄 넣는다
-  if(o.discount){
-    lines.push(['파트너 부담 할인', -o.discount]);
-    lines.push(['이용료 기준 금액', o.base]);
-  }
   if(o.tip) lines.push(['고객 부담 배달팁', o.tip]);
   lines.push(['중개이용료 (' + pct(o.rate) + ')', -o.commission]);
   if(o.deliveryFee) lines.push(['배달비', -o.deliveryFee]);
   lines.push(['결제정산수수료 (3.0%)', -o.pg]);
+  if(o.discount) lines.push(['파트너 부담 할인', -o.discount]);
   lines.push(['부가세 (10%)', -o.vat]);
 
   $('#rows').innerHTML = lines.map(function(l){

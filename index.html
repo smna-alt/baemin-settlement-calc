@@ -204,7 +204,7 @@ dialog .ok:hover{background:var(--blue-dark)}
 
     <div class="field" id="tipField">
       <label for="tip">고객 부담 배달팁</label>
-      <div class="ctrl"><input id="tip" inputmode="numeric" placeholder="0" autocomplete="off"><span class="unit">원</span></div>
+      <div class="ctrl"><input id="tip" inputmode="numeric" placeholder="0" autocomplete="off" value="0"><span class="unit">원</span></div>
       <div class="chips" id="tipChips"></div>
       <p class="hint">고객으로부터 받은 배달팁 금액이에요</p>
     </div>
@@ -216,14 +216,14 @@ dialog .ok:hover{background:var(--blue-dark)}
 
     <div class="field">
       <label for="price">주문금액</label>
-      <div class="ctrl"><input id="price" inputmode="numeric" placeholder="0" autocomplete="off"><span class="unit">원</span></div>
+      <div class="ctrl"><input id="price" inputmode="numeric" placeholder="0" autocomplete="off" value="10,000"><span class="unit">원</span></div>
       <div class="chips" id="priceChips"></div>
       <p class="hint">고객이 주문한 음식값이에요</p>
     </div>
 
     <div class="field">
       <label for="discount">파트너 부담 할인 <span class="sub">(선택)</span></label>
-      <div class="ctrl"><input id="discount" inputmode="numeric" placeholder="0" autocomplete="off"><span class="unit">원</span></div>
+      <div class="ctrl"><input id="discount" inputmode="numeric" placeholder="0" autocomplete="off" value="0"><span class="unit">원</span></div>
       <div class="chips" id="discountChips"></div>
       <p class="hint">파트너님이 고객에게 제공하는 할인 금액이에요.</p>
     </div>
@@ -493,6 +493,7 @@ $('#form').addEventListener('reset', function(){
 });
 
 syncFields();
+Object.keys(CHIPS).forEach(markChips);   // 기본값으로 들어간 주문금액 칩을 눌린 상태로
 if(location.search.indexOf('test') > -1) selfCheck();
 })();
 </script>

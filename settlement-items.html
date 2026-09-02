@@ -8,8 +8,8 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:'Pretendard Variable','Pretendard','Apple SD Gothic Neo',sans-serif;background:#fff;color:#222;font-size:15px;line-height:1.7;-webkit-font-smoothing:antialiased;padding:16px;}
-.item-tab-bar{display:flex;gap:0;flex-wrap:wrap;margin-bottom:-1px;}
-.item-tab-btn{padding:7px 14px 8px;border:1px solid #E4E6E8;border-bottom:none;background:#F5F6F8;color:#666;font-size:12px;font-weight:500;cursor:pointer;font-family:inherit;border-radius:6px 6px 0 0;margin-right:4px;transition:background .1s;position:relative;z-index:0;}
+.item-tab-bar{display:flex;gap:4px;flex-wrap:nowrap;margin-bottom:-1px;}
+.item-tab-btn{flex:1 1 0;min-width:0;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:7px 4px 8px;border:1px solid #E4E6E8;border-bottom:none;background:#F5F6F8;color:#666;font-size:12px;font-weight:500;cursor:pointer;font-family:inherit;border-radius:4px 4px 0 0;transition:background .1s;position:relative;z-index:0;}
 .item-tab-btn:hover:not(.active){background:#EBEDF0;}
 .item-tab-btn.active{background:#fff;color:#1a7cff;font-weight:700;border-bottom-color:#fff;z-index:2;}
 .item-tab-btn.optional{background:#FAFAFA;color:#AAB0B8;border-style:dashed;border-bottom:none;font-weight:400;}

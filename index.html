@@ -72,7 +72,7 @@ body{
   color:var(--ink); background:var(--bg); font-size:16px; line-height:1.5;
   -webkit-text-size-adjust:100%;
 }
-.wrap{max-width:480px;margin:0 auto;padding:24px 20px 48px}
+.wrap{max-width:400px;margin:0 auto;padding:24px 20px 48px}
 /* 탭 */
 .tabs{display:flex;gap:24px;margin:0 0 4px;border-bottom:1px solid var(--line)}
 .tab{background:none;border:0;padding:12px 0 14px;font:inherit;font-size:16px;font-weight:500;
@@ -283,7 +283,7 @@ var REGIONS = [
 // 주문 유형별 구성
 var TYPES = {
   baemin: { tiers:BAEMIN_TIERS, region:true,
-            hint:'배민셀프서비스 &gt; 배민배달 매출 규모 분류에서 확인할 수 있어요' },
+            hint:'셀프서비스 &gt; 배민배달 매출 규모 분류에서 확인할 수 있어요' },
   // 가게배달 배달비는 파트너님이 대행사에 직접 지불한다. 배민이 받지 않으니 정산에서 빠지지 않는다
   store:  { tiers:[{ rate:.068, cap:'주문 건당 부과돼요' }], region:false, tipInput:true },
   pickup: { tiers:[{ rate:.068, cap:'주문 건당 부과돼요' }], region:false }

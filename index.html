@@ -150,9 +150,9 @@ dialog .ok:hover{background:var(--blue-dark)}
 .btn-primary:hover{background:var(--blue-dark)}
 .btn-ghost{flex:0 0 88px;background:var(--white);border:1px solid var(--line);color:var(--ink-56)}
 
-/* 결과 */
-.result{margin-top:12px}
-.result[hidden]{display:none}
+/* 결과 — 팝업 안에 들어간다 */
+#resultDialog{max-width:380px}
+#resultDialog .headline{margin-top:16px}
 /* 셀프서비스 정산내역 화면을 따라 — 차감 금액에 빨강을 쓰지 않는다.
    빨강은 정산액이 마이너스인 진짜 경고 상황에만 남긴다 */
 /* 20px 숫자와 14px 라벨은 베이스라인을 맞추면 라벨이 내려앉아 보인다 — 중앙을 맞춘다 */
@@ -236,13 +236,15 @@ dialog .ok:hover{background:var(--blue-dark)}
    </section>
   </form>
 
-  <section class="result card" id="result" hidden aria-live="polite">
+  <dialog id="resultDialog" aria-live="polite">
+    <h2>정산 미리보기</h2>
     <div class="headline">
       <span class="k">입금 예정 금액</span>
       <span class="v" id="settle">0원</span>
     </div>
     <div class="rows" id="rows"></div>
-  </section>
+    <button type="button" class="ok">확인</button>
+  </dialog>
 
 
   <dialog id="regionDialog">
@@ -402,7 +404,6 @@ function syncFields(){
   $('#tipField').style.display = t.tipInput ? '' : 'none';
   if(t.region) $('#feeReadout').textContent = won(REGIONS[+$('#region').value].fees[t.tiers[tierIdx].band]);
 
-  $('#result').hidden = true;
 }
 
 document.querySelectorAll('.tab').forEach(function(btn){
@@ -416,10 +417,12 @@ document.querySelectorAll('.tab').forEach(function(btn){
 $('#tier').addEventListener('change', function(){ tierIdx = +this.value; syncFields(); });
 $('#region').addEventListener('change', syncFields);
 
-var dlg = $('#regionDialog');
-$('#regionHelp').addEventListener('click', function(){ dlg.showModal(); });
-dlg.querySelector('.ok').addEventListener('click', function(){ dlg.close(); });
-dlg.addEventListener('click', function(e){ if(e.target === dlg) dlg.close(); });  // 바깥 누르면 닫기
+// 팝업 두 개가 같은 방식으로 닫히게 한 곳에서 처리한다
+document.querySelectorAll('dialog').forEach(function(d){
+  d.querySelector('.ok').addEventListener('click', function(){ d.close(); });
+  d.addEventListener('click', function(e){ if(e.target === d) d.close(); });  // 바깥 누르면 닫기
+});
+$('#regionHelp').addEventListener('click', function(){ $('#regionDialog').showModal(); });
 
 ['price','discount','tip'].forEach(function(id){
   $('#' + id).addEventListener('input', function(){
@@ -487,7 +490,7 @@ $('#form').addEventListener('submit', function(e){
          + '<span class="v">' + won(l[1]) + '</span></div>';
   }).join('');   // 합계는 위 headline 에 한 번만 — 같은 숫자를 두 번 보여주지 않는다
 
-  $('#result').hidden = false;
+  $('#resultDialog').showModal();
 });
 
 $('#form').addEventListener('reset', function(){

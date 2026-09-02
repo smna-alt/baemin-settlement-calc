@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>배달의민족 정산 미리보기 | 배민외식업광장</title>
+<style>
+@font-face {
+    font-family: 'Pretendard';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-Thin.woff2') format('woff2');
+    font-weight: 100;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Pretendard';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-ExtraLight.woff2') format('woff2');
+    font-weight: 200;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Pretendard';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-Light.woff2') format('woff2');
+    font-weight: 300;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Pretendard';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Pretendard';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-Medium.woff2') format('woff2');
+    font-weight: 500;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Pretendard';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-SemiBold.woff2') format('woff2');
+    font-weight: 600;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Pretendard';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Pretendard';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-ExtraBold.woff2') format('woff2');
+    font-weight: 800;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Pretendard';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-Black.woff2') format('woff2');
+    font-weight: 900;
+    font-display: swap;
+}
+/* ── 배외광 /labor 계산기에서 실측한 토큰 ───────────────── */
+:root{
+  --blue:#1A7CFF; --blue-dark:#0C63D6; --blue-bg:#F0F6FF;
+  --ink:#181A1C; --ink-56:rgba(24,26,28,.56); --ink-36:rgba(24,26,28,.36);
+  --line:#E4E5E7; --bg:#F7F8F9; --white:#fff; --red:#E5493A;
+  --r:4px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:Pretendard,-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+  color:var(--ink); background:var(--bg); font-size:16px; line-height:1.5;
+  -webkit-text-size-adjust:100%;
+}
+.wrap{max-width:480px;margin:0 auto;padding:24px 20px 48px}
+h1{font-size:22px;font-weight:700;letter-spacing:-.02em}
+.lede{margin-top:8px;font-size:14px;color:var(--ink-56)}
+
+/* 탭 */
+.tabs{display:flex;gap:24px;margin:24px 0 4px;border-bottom:1px solid var(--line)}
+.tab{background:none;border:0;padding:12px 0 14px;font:inherit;font-size:16px;font-weight:500;
+     color:var(--ink-56);cursor:pointer;position:relative}
+.tab[aria-selected="true"]{color:var(--ink);font-weight:700}
+.tab[aria-selected="true"]::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--ink)}
+
+/* 카드 · 필드 */
+.card{background:var(--white);border-radius:var(--r);padding:24px 20px;margin-top:20px}
+.card + .card{margin-top:12px}
+/* 셀프서비스처럼 섹션 제목이 안쪽 항목 라벨(14px)보다 확실히 위에 오게 한다 */
+.group{font-size:17px;font-weight:700;color:var(--ink);letter-spacing:-.01em;margin-bottom:18px}
+.field{margin-top:20px}
+.field:first-child{margin-top:0}
+label{display:block;font-size:14px;font-weight:500;margin-bottom:8px}
+/* ? 버튼이 글자와 세로 중앙을 맞추도록 — vertical-align 눈대중은 원 크기가 달라지면 어긋난다 */
+.label{display:flex;align-items:center;gap:4px;font-size:14px;font-weight:500;margin-bottom:8px}
+.sub{color:var(--ink-36);font-weight:400}
+.hint{font-size:13px;color:var(--ink-56);margin-top:6px}
+.ctrl{display:flex;align-items:center;border:1px solid var(--line);border-radius:var(--r);
+      background:var(--white);transition:border-color .12s}
+.ctrl:focus-within{border-color:var(--blue)}
+.ctrl input{flex:1;min-width:0;border:0;outline:0;background:none;font:inherit;font-size:16px;
+            padding:10px 12px;text-align:right}
+.ctrl .unit{padding:10px 12px 10px 0;font-size:16px;color:var(--ink-56)}
+select{width:100%;border:1px solid var(--line);border-radius:var(--r);background-color:var(--white);
+       font:inherit;font-size:16px;padding:10px 36px 10px 12px;color:var(--ink);appearance:none;
+       background-image:url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath fill='none' stroke='%23999' stroke-width='1.5' d='M1 1.5 6 6.5 11 1.5'/%3E%3C/svg%3E");
+       background-repeat:no-repeat;background-position:right 12px center;background-size:12px}
+select:focus{outline:0;border-color:var(--blue)}
+
+/* 중개이용료 — 요율이 주인공, 구간은 보조 설명 */
+.rate{display:block;width:100%;text-align:left;border:1px solid var(--line);border-radius:var(--r);
+      background:var(--white);padding:12px 14px;font:inherit;cursor:pointer;transition:border-color .12s}
+.rate .pct{display:block;font-size:20px;font-weight:700;letter-spacing:-.02em;line-height:1.25}
+.rate .cap{display:block;font-size:13px;color:var(--ink-56);margin-top:2px}
+.rate.is-static{cursor:default;background:var(--bg);border-color:transparent;margin-top:8px}
+
+/* ? 눌러서 뜨는 설명 팝업 — 딤·ESC 닫기는 <dialog> 가 알아서 한다 */
+.help{display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;
+  width:16px;height:16px;padding:0;border:1px solid var(--ink-36);border-radius:50%;
+  background:none;color:var(--ink-36);font:inherit;font-size:11px;font-weight:700;line-height:1;cursor:pointer}
+.help:hover{border-color:var(--ink);color:var(--ink)}
+/* margin:auto 가 있어야 화면 가운데에 뜬다 — 위 * 리셋이 이걸 지운다 */
+dialog{border:0;margin:auto;padding:24px 20px 20px;border-radius:12px;width:calc(100% - 40px);max-width:340px;
+  background:var(--white);color:var(--ink);box-shadow:0 12px 40px rgba(24,26,28,.2)}
+dialog::backdrop{background:rgba(24,26,28,.45)}
+dialog h2{font-size:18px;font-weight:700;letter-spacing:-.02em}
+dialog .body{margin-top:16px;font-size:14px;color:var(--ink-56);line-height:1.7}
+dialog .body b{display:block;margin-top:12px;color:var(--ink);font-weight:700}
+dialog .body b:first-child{margin-top:0}
+dialog .ok{width:100%;margin-top:20px;padding:14px;border:0;border-radius:8px;
+  background:var(--blue);color:#fff;font:inherit;font-size:16px;font-weight:700;cursor:pointer}
+dialog .ok:hover{background:var(--blue-dark)}
+
+.readout{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:8px;
+         background:var(--bg);border-radius:var(--r);padding:12px}
+.readout .k{font-size:14px;color:var(--ink-56)}
+.readout .v{font-size:16px;font-weight:700;white-space:nowrap}
+
+/* 자주 쓰는 금액 빠른 선택 */
+.chips{display:flex;gap:6px;margin-top:8px}
+/* 폭을 4등분해 좁은 화면에서도 한 줄을 유지한다 */
+.chips button{flex:1 1 0;min-width:0;padding:8px 4px;text-align:center;
+  border:1px solid var(--line);border-radius:var(--r);
+  background:var(--white);font:inherit;font-size:13px;color:var(--ink-56);cursor:pointer;
+  font-variant-numeric:tabular-nums;transition:border-color .12s}
+.chips button:hover{border-color:var(--ink-36);color:var(--ink)}
+.chips button[aria-pressed="true"]{border-color:var(--blue);background:var(--blue-bg);
+  color:var(--blue);font-weight:700}
+
+.actions{display:flex;gap:8px;margin-top:24px}
+.btn{flex:1;padding:14px;border:0;border-radius:var(--r);font:inherit;font-size:16px;font-weight:500;cursor:pointer}
+.btn-primary{background:var(--blue);color:#fff}
+.btn-primary:hover{background:var(--blue-dark)}
+.btn-ghost{flex:0 0 88px;background:var(--white);border:1px solid var(--line);color:var(--ink-56)}
+
+/* 결과 */
+.result{margin-top:12px}
+.result[hidden]{display:none}
+/* 셀프서비스 정산내역 화면을 따라 — 차감 금액에 빨강을 쓰지 않는다.
+   빨강은 정산액이 마이너스인 진짜 경고 상황에만 남긴다 */
+/* 20px 숫자와 14px 라벨은 베이스라인을 맞추면 라벨이 내려앉아 보인다 — 중앙을 맞춘다 */
+.headline{display:flex;justify-content:space-between;align-items:center;gap:12px;
+  background:var(--bg);border-radius:var(--r);padding:16px}
+.headline .k{font-size:14px;color:var(--ink-56)}
+.headline .v{font-size:20px;font-weight:700;letter-spacing:-.02em}
+.headline .v.minus{color:var(--red)}
+/* 내역은 보조 정보라 작게 — 눈에 먼저 들어와야 하는 건 위의 입금 예정 금액 */
+.rows{margin-top:4px}
+.row{display:flex;justify-content:space-between;gap:12px;padding:11px 0;border-bottom:1px solid var(--line);font-size:13px}
+.row:last-child{border-bottom:0;padding-bottom:0}
+.row .k{color:var(--ink-56)}
+.row .v{font-variant-numeric:tabular-nums;white-space:nowrap}
+
+/* 안내 — .notice 로 한정한다. 범위를 안 두면 위 .tip 까지 같이 먹는다 */
+.notice{margin-top:20px;background:var(--white);border-radius:var(--r);padding:16px 20px}
+.notice > summary{font-size:15px;font-weight:500;cursor:pointer;list-style:none}
+.notice > summary::-webkit-details-marker{display:none}
+.notice > summary::after{content:"⌄";float:right;color:var(--ink-36)}
+.notice[open] > summary::after{content:"⌃"}
+.notice ul{margin:12px 0 0 16px;font-size:14px;color:var(--ink-56)}
+.notice li{margin-top:8px}
+.notice a{color:var(--blue)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="tabs" role="tablist">
+    <button class="tab" role="tab" data-type="baemin" aria-selected="true">배민배달</button>
+    <button class="tab" role="tab" data-type="store" aria-selected="false">가게배달</button>
+    <button class="tab" role="tab" data-type="pickup" aria-selected="false">픽업</button>
+  </div>
+
+  <form id="form">
+   <section class="card">
+    <p class="group">가게 기준</p>
+
+    <div class="field">
+      <span class="label">중개이용료 <span class="sub">(부가세 별도)</span></span>
+      <select id="tier" aria-label="배민배달 매출 규모"></select>
+      <div class="rate is-static">
+        <span class="pct" id="rateReadout">7.8%</span>
+        <span class="cap">주문 건당 부과돼요</span>
+      </div>
+      <p class="hint" id="rateHint"></p>
+    </div>
+
+    <div class="field" id="regionField">
+      <span class="label">파트너 부담 배달비 <span class="sub">(부가세 별도)</span>
+        <button type="button" class="help" id="regionHelp" aria-label="경기 1지역 2지역 구분 보기">?</button></span>
+      <select id="region" aria-label="가게 지역"></select>
+      <div class="rate is-static">
+        <span class="pct" id="feeReadout">3,400원</span>
+        <span class="cap">주문 건당 부과돼요</span>
+      </div>
+      <p class="hint">매출 규모와 지역에 따라 배민이 할인을 적용한 금액이에요</p>
+    </div>
+
+    <div class="field" id="tipField">
+      <label for="tip">고객 부담 배달팁</label>
+      <div class="ctrl"><input id="tip" inputmode="numeric" placeholder="0" autocomplete="off"><span class="unit">원</span></div>
+      <div class="chips" id="tipChips"></div>
+      <p class="hint">고객으로부터 받은 배달팁 금액이에요</p>
+    </div>
+
+   </section>
+
+   <section class="card">
+    <p class="group">주문 예시</p>
+
+    <div class="field">
+      <label for="price">주문금액</label>
+      <div class="ctrl"><input id="price" inputmode="numeric" placeholder="0" autocomplete="off"><span class="unit">원</span></div>
+      <div class="chips" id="priceChips"></div>
+      <p class="hint">고객이 주문한 음식값이에요</p>
+    </div>
+
+    <div class="actions">
+      <button type="submit" class="btn btn-primary">계산하기</button>
+      <button type="reset" class="btn btn-ghost">초기화</button>
+    </div>
+   </section>
+  </form>
+
+  <section class="result card" id="result" hidden aria-live="polite">
+    <div class="headline">
+      <span class="k">입금 예정 금액</span>
+      <span class="v" id="settle">0원</span>
+    </div>
+    <div class="rows" id="rows"></div>
+  </section>
+
+  <details class="notice">
+    <summary>안내드립니다</summary>
+    <ul>
+      <li>본 계산기는 모의 계산 결과로 실제 정산 금액과 다를 수 있어요</li>
+      <li>중개이용료·배달비·결제정산수수료는 부가세 별도 금액이라, 세 금액을 더한 뒤 부가세 10%를 함께 차감했어요</li>
+      <li>결제정산수수료는 고객 결제 대행에 드는 비용으로 3.0%예요</li>
+      <li>배민배달의 고객 부담 배달팁은 파트너님 정산 금액에 포함되지 않아요</li>
+      <li>가게배달의 고객 부담 배달팁은 파트너님 매출로 들어와요. 그대로 전달되는 금액이라 중개이용료·부가세가 붙지 않아요</li>
+      <li>가게배달 배달비는 파트너님이 배달대행사에 직접 지불하는 금액이라 배민 정산에서 빠지지 않아요</li>
+      <li>배민배달 매출 규모는 3개월 단위로 다시 산정돼요</li>
+      <li>파트너 부담 배달비는 배달환경·시장가격에 따라 변동될 수 있어요</li>
+      <li>같은 도라도 시·군에 따라 배달비가 다를 수 있어요. 목록에 없는 지역은 배민셀프서비스에서 확인해 주세요</li>
+      <li>기준은 <a href="https://ceo.baemin.com/guide/12699" target="_blank" rel="noopener">배민배달의 이해</a>,
+          <a href="https://ceo.baemin.com/guide/3882" target="_blank" rel="noopener">가게배달의 이해</a>,
+          <a href="https://ceo.baemin.com/guide/2991" target="_blank" rel="noopener">픽업의 이해</a>를 따라요</li>
+    </ul>
+  </details>
+
+  <dialog id="regionDialog">
+    <h2>경기 1지역 · 2지역</h2>
+    <div class="body">
+      <b>1지역</b>고양(일산동구·일산서구·덕양구), 구리, 군포, 과천, 광명, 광주, 김포, 남양주, 부천, 성남(분당구·수정구·중원구), 수원(권선구·영통구·장안구·팔달구), 시흥, 안산(단원구·상록구), 안양(동안구·만안구), 오산, 용인(수지구·기흥구·처인구), 양주, 이천, 의왕, 의정부, 파주, 평택, 하남, 화성
+      <b>2지역</b>안성, 동두천, 여주, 포천
+    </div>
+    <button type="button" class="ok">확인</button>
+  </dialog>
+</div>
+
+<script>
+(function(){
+/* ── 요율·배달비 ─────────────────────────────────────────────
+   출처: ceo.baemin.com/guide/12699 (배민배달) · /guide/3882 (가게배달) · /guide/2991 (픽업)
+   요율이 바뀌면 이 블록만 고치면 됩니다. */
+
+// 배민배달 상생 요금제 — 요율이 먼저, 매출 규모는 보조 설명
+var BAEMIN_TIERS = [
+  { rate:.078, cap:'상위 35% 이내 · 신규 이용 파트너', band:0 },
+  { rate:.068, cap:'35% 초과 ~ 50% 이하',              band:1 },
+  { rate:.068, cap:'50% 초과 ~ 80% 이하',              band:2 },
+  { rate:.020, cap:'80% 초과 ~ 100%',                  band:2 }  // band 2 는 t3·t4 공용
+];
+
+// 지역별 할인 후 파트너 부담 배달비 — fees 는 [band0, band1, band2]
+// 가이드 표에서 경기도가 두 행으로 갈려 금액이 다르다.
+// '경기 1지역 / 2지역' 은 가이드에 없는 우리 쪽 표기이므로, 실제 시·군은 cities 로 펼쳐 보여준다.
+var REGIONS = [
+  { name:'서울 · 경기 1지역',                                fees:[3400,3100,2900] },
+  { name:'인천',                                             fees:[3300,3000,2800] },
+  { name:'광주 · 대구 · 대전 · 부산 · 세종 · 경기 2지역',    fees:[3100,2800,2600] },
+  { name:'울산 · 제주 · 그 외 지방 시·군',                   fees:[3000,2700,2500] },
+  { name:'경북 포항 · 경남 양산',                            fees:[2400,2100,1900] }
+];
+
+// 주문 유형별 구성
+var TYPES = {
+  baemin: { tiers:BAEMIN_TIERS, region:true,
+            hint:'배민셀프서비스 &gt; 배민배달 매출 규모 분류에서 확인할 수 있어요' },
+  // 가게배달 배달비는 파트너님이 대행사에 직접 지불한다. 배민이 받지 않으니 정산에서 빠지지 않는다
+  store:  { tiers:[{ rate:.068, cap:'주문 건당 부과돼요' }], region:false, tipInput:true },
+  pickup: { tiers:[{ rate:.068, cap:'주문 건당 부과돼요' }], region:false }
+};
+// 결제정산수수료 — 가이드에는 없고 셀프서비스 정산정보 화면에서 역산했다.
+// 54,000원 주문에 1,620원 = 정확히 3.0%. 공식 요율표를 받으면 이 값을 확인할 것.
+var PG_RATE = .03;
+var VAT = .1;   // 중개이용료 + 배달비 + 결제정산수수료 합계에 붙는다 (같은 화면에서 확인)
+
+/* ── 계산 ───────────────────────────────────────────────── */
+function calc(i){
+  var t = TYPES[i.type];
+  var tier = t.tiers[i.tierIdx];
+  // [보류] 파트너 부담 할인 — 2026-09-02 사용자 요청으로 화면에서 뺐다. 되살릴 때 규칙:
+  //   base = Math.max(0, i.price - i.discount)
+  //   고객할인비용에는 중개이용료·결제정산수수료를 부과하지 않으므로 두 요율의 기준이 base 가 된다.
+  //   부가세는 그대로 (중개이용료 + 배달비 + 결제정산수수료) 의 10%.
+  //   내역에 '이용료 기준 금액' 줄을 함께 보여줘야 오해가 없다.
+  var base = i.price;
+  var commission = Math.round(base * tier.rate);
+  var deliveryFee = t.region ? REGIONS[i.region].fees[tier.band] : 0;
+  var pg     = Math.round(base * PG_RATE);
+  var vat    = Math.round((commission + deliveryFee + pg) * VAT);
+  // 고객 부담 배달팁은 고객에게 받아 그대로 전달되는 금액이다.
+  // 파트너님 매출이 아니므로 중개이용료·결제정산수수료·부가세 어느 기준에도 들어가지 않고, 정산액에만 더해진다
+  var tip    = t.tipInput ? i.tip : 0;
+  var settle = base + tip - commission - deliveryFee - pg - vat;
+  return { rate:tier.rate, base:base, commission:commission, deliveryFee:deliveryFee,
+           pg:pg, vat:vat, tip:tip, settle:settle };
+}
+
+/* ── 자체 점검: ?test 로 열면 콘솔에서 확인 ────────────────── */
+function selfCheck(){
+  // 골든셋 — 셀프서비스 정산정보 실제 화면 (주문 54,000원 · 중개 6.8% · 배달비 3,200원)
+  // 배달비는 지역표에서 나오는 값이라, 여기서는 요율과 계산식만 실제 화면과 대조한다
+  var g = calc({type:'store', tierIdx:0, region:0, price:54000});
+  console.assert(g.commission === 3672, '중개이용료 6.8%', g.commission);
+  console.assert(g.pg === 1620, '결제정산수수료 3.0%', g.pg);
+  var fee = 3200;
+  var vat = Math.round((g.commission + fee + g.pg) * VAT);
+  console.assert(vat === 849, '부가세 = (3672+3200+1620)*10%', vat);
+  console.assert(54000 - g.commission - fee - g.pg - vat === 44659, '입금예정금액');
+
+  // 배민배달 서울(region 0) · 7.8% 구간 · 2만원 → 배달비 3,400원
+  var a = calc({type:'baemin', tierIdx:0, region:0, price:20000});
+  console.assert(a.commission === 1560, '중개이용료 7.8%', a.commission);
+  console.assert(a.deliveryFee === 3400, '서울 band0 배달비', a.deliveryFee);
+  console.assert(a.pg === 600, '결제정산수수료 3.0%', a.pg);
+  console.assert(a.vat === 556, '부가세 (1560+3400+600)*10%', a.vat);
+  console.assert(a.settle === 20000-1560-3400-600-556, '입금예정금액', a.settle);
+
+  // 3번째·4번째 구간은 배달비 표가 같고 요율만 다르다
+  var t3 = calc({type:'baemin', tierIdx:2, region:0, price:20000});
+  var t4 = calc({type:'baemin', tierIdx:3, region:0, price:20000});
+  console.assert(t3.deliveryFee === 2900 && t4.deliveryFee === 2900, 'band2 배달비 동일');
+  console.assert(t3.commission === 1360 && t4.commission === 400, '6.8% / 2.0%');
+
+  // 가게배달·픽업은 배민이 배달비를 받지 않으므로 정산에서 차감하지 않는다
+  var s = calc({type:'store',  tierIdx:0, region:0, price:20000});
+  var p = calc({type:'pickup', tierIdx:0, region:0, price:20000});
+  console.assert(s.deliveryFee === 0 && p.deliveryFee === 0, '배달비 미차감');
+  console.assert(s.settle === p.settle, '가게배달·픽업 정산액 동일');
+  console.assert(s.vat === 196, '부가세 (1360+600)*10%', s.vat);
+  console.assert(s.settle === 20000-1360-600-196, '입금예정금액', s.settle);
+
+  // 가게배달 배달팁 — 3만원 주문에 배달팁 3천원이면 고객은 3만 3천원을 결제하지만,
+  // 배달팁은 그대로 전달되는 금액이라 중개이용료·결제정산수수료·부가세가 붙지 않는다
+  var tp = calc({type:'store', tierIdx:0, region:0, price:30000, tip:3000});
+  var noTip = calc({type:'store', tierIdx:0, region:0, price:30000, tip:0});
+  console.assert(tp.commission === noTip.commission, '배달팁에 중개이용료 안 붙음');
+  console.assert(tp.pg === noTip.pg, '배달팁에 결제정산수수료 안 붙음');
+  console.assert(tp.vat === noTip.vat, '배달팁에 부가세 안 붙음');
+  console.assert(tp.settle === noTip.settle + 3000, '배달팁은 정산액에 그대로 더해짐', tp.settle);
+  // 배민배달·픽업은 배달팁 입력 자체가 없다
+  console.assert(calc({type:'baemin', tierIdx:0, region:0, price:30000, tip:3000}).tip === 0,
+                 '배민배달 배달팁 미반영');
+
+  console.log('self-check done');
+}
+
+/* ── 화면 ───────────────────────────────────────────────── */
+var $ = function(s){ return document.querySelector(s); };
+var type = 'baemin', tierIdx = 0;
+var won = function(n){ return (n === 0 ? 0 : n).toLocaleString('ko-KR') + '원'; };
+var pct = function(r){ return (r * 100).toFixed(1) + '%'; };
+var num = function(el){ return parseInt(String(el.value).replace(/[^0-9]/g,''), 10) || 0; };
+
+$('#region').innerHTML = REGIONS.map(function(r, i){
+  return '<option value="' + i + '">' + r.name + '</option>';
+}).join('');
+
+function syncFields(){
+  var t = TYPES[type];
+  if(tierIdx >= t.tiers.length) tierIdx = 0;
+
+  // 고를 구간이 하나뿐이면 드롭다운을 숨기고 요율만 보여준다
+  var many = t.tiers.length > 1;
+  $('#tier').style.display = many ? '' : 'none';
+  if(many){
+    $('#tier').innerHTML = t.tiers.map(function(tier, i){
+      return '<option value="' + i + '"' + (i === tierIdx ? ' selected' : '') + '>' + tier.cap + '</option>';
+    }).join('');
+  }
+  $('#rateReadout').textContent = pct(t.tiers[tierIdx].rate);
+  $('#rateHint').innerHTML = t.hint || '';
+  $('#rateHint').hidden = !t.hint;
+
+  $('#regionField').style.display = t.region ? '' : 'none';
+  $('#tipField').style.display = t.tipInput ? '' : 'none';
+  if(t.region) $('#feeReadout').textContent = won(REGIONS[+$('#region').value].fees[t.tiers[tierIdx].band]);
+
+  $('#result').hidden = true;
+}
+
+document.querySelectorAll('.tab').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    document.querySelectorAll('.tab').forEach(function(b){ b.setAttribute('aria-selected', b === btn); });
+    type = btn.dataset.type;
+    tierIdx = 0;
+    syncFields();
+  });
+});
+$('#tier').addEventListener('change', function(){ tierIdx = +this.value; syncFields(); });
+$('#region').addEventListener('change', syncFields);
+
+var dlg = $('#regionDialog');
+$('#regionHelp').addEventListener('click', function(){ dlg.showModal(); });
+dlg.querySelector('.ok').addEventListener('click', function(){ dlg.close(); });
+dlg.addEventListener('click', function(e){ if(e.target === dlg) dlg.close(); });  // 바깥 누르면 닫기
+
+['price','tip'].forEach(function(id){
+  $('#' + id).addEventListener('input', function(){
+    var v = this.value.replace(/[^0-9]/g,'');
+    this.value = v ? parseInt(v,10).toLocaleString('ko-KR') : '';
+    markChips(id);
+  });
+});
+
+// 자주 쓰는 금액을 눌러서 넣는다 — 직접 입력도 그대로 된다
+var CHIPS = {                             // 한 줄에 들어가는 4개까지만
+  price:    [10000, 20000, 30000, 40000],
+  tip:      [0, 1000, 2000, 3000, 4000]
+};
+// 0원 칩이 있으므로 숫자가 아니라 입력칸이 비었는지로 판단한다 — '' 와 '0' 은 다르다
+function digits(id){ return $('#' + id).value.replace(/[^0-9]/g,''); }
+function markChips(id){
+  var slot = $('#' + id + 'Chips'); if(!slot) return;
+  var raw = digits(id);
+  slot.querySelectorAll('button').forEach(function(b){
+    b.setAttribute('aria-pressed', raw !== '' && +b.dataset.v === +raw);
+  });
+}
+Object.keys(CHIPS).forEach(function(id){
+  var slot = $('#' + id + 'Chips');
+  slot.innerHTML = CHIPS[id].map(function(v){
+    return '<button type="button" data-v="' + v + '">' + won(v) + '</button>';
+  }).join('');
+  slot.addEventListener('click', function(e){
+    var b = e.target.closest('button'); if(!b) return;
+    var raw = digits(id);
+    // 같은 값을 다시 누르면 지운다
+    $('#' + id).value = (raw !== '' && +b.dataset.v === +raw)
+      ? '' : (+b.dataset.v).toLocaleString('ko-KR');
+    markChips(id);
+  });
+});
+
+$('#form').addEventListener('submit', function(e){
+  e.preventDefault();
+  var price = num($('#price'));
+  if(!price){ $('#price').focus(); return; }
+
+  var o = calc({ type:type, tierIdx:tierIdx, region:+$('#region').value,
+                 price:price, tip:num($('#tip')) });
+
+  $('#settle').textContent = won(o.settle);
+  $('#settle').classList.toggle('minus', o.settle < 0);
+
+  var lines = [['주문금액', price]];
+  if(o.tip) lines.push(['고객 부담 배달팁', o.tip]);
+  lines.push(['중개이용료 (' + pct(o.rate) + ')', -o.commission]);
+  if(o.deliveryFee) lines.push(['배달비', -o.deliveryFee]);
+  lines.push(['결제정산수수료 (3.0%)', -o.pg]);
+  lines.push(['부가세 (10%)', -o.vat]);
+
+  $('#rows').innerHTML = lines.map(function(l){
+    return '<div class="row"><span class="k">' + l[0] + '</span>'
+         + '<span class="v">' + won(l[1]) + '</span></div>';
+  }).join('');   // 합계는 위 headline 에 한 번만 — 같은 숫자를 두 번 보여주지 않는다
+
+  $('#result').hidden = false;
+});
+
+$('#form').addEventListener('reset', function(){
+  setTimeout(function(){ syncFields(); Object.keys(CHIPS).forEach(markChips); }, 0);
+});
+
+syncFields();
+if(location.search.indexOf('test') > -1) selfCheck();
+})();
+</script>
+</body>
+</html>

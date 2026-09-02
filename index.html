@@ -264,7 +264,7 @@ dialog .ok:hover{background:var(--blue-dark)}
 
 // 배민배달 상생 요금제 — 요율이 먼저, 매출 규모는 보조 설명
 var BAEMIN_TIERS = [
-  { rate:.078, cap:'상위 35% 이내 · 신규 파트너', band:0 },
+  { rate:.078, cap:'신규 파트너 · 상위 35% 이내', band:0 },
   { rate:.068, cap:'35% 초과 ~ 50% 이하',              band:1 },
   { rate:.068, cap:'50% 초과 ~ 80% 이하',              band:2 },
   { rate:.020, cap:'80% 초과 ~ 100%',                  band:2 }  // band 2 는 t3·t4 공용
@@ -284,7 +284,7 @@ var REGIONS = [
 // 주문 유형별 구성
 var TYPES = {
   baemin: { tiers:BAEMIN_TIERS, region:true,
-            hint:'셀프서비스&gt;배민배달 매출 규모 분류에서 확인할 수 있어요' },
+            hint:'매출 규모에 따라 상생 요금제가 적용돼요' },
   // 가게배달 배달비는 파트너님이 대행사에 직접 지불한다. 배민이 받지 않으니 정산에서 빠지지 않는다
   store:  { tiers:[{ rate:.068 }], region:false, tipInput:true },
   pickup: { tiers:[{ rate:.068 }], region:false }

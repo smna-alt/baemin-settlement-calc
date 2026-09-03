@@ -22,6 +22,14 @@
 body{ font-family:'Pretendard',-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif; color:var(--ink); font-size:14px; line-height:1.5; background:#fff; -webkit-font-smoothing:antialiased; }
 .wrap{ max-width:100%; }
 
+/* 수식 흐름 */
+.flow{ display:flex;flex-wrap:wrap;align-items:center;gap:6px;overflow-x:auto;padding:2px 0 18px; }
+.fc{ display:inline-block;padding:6px 11px;border-radius:6px;font-weight:700;font-size:12.5px;white-space:nowrap; }
+.fc.sales{background:var(--sales-bg);color:var(--sales)} .fc.sup{background:var(--sup-bg);color:var(--sup)}
+.fc.cost{background:var(--cost-bg);color:var(--cost)} .fc.adj{background:var(--adj-bg);color:var(--adj)}
+.fc.res{background:#1E2A52;color:#fff}
+.op{color:#B4BAC2;font-weight:700;font-size:13px;flex-shrink:0}
+
 .head{ font-size:16px;font-weight:700;color:var(--ink);margin:2px 0 2px; }
 .headsub{ font-size:12.5px;color:var(--sub);margin-bottom:14px; }
 
@@ -64,6 +72,15 @@ body{ font-family:'Pretendard',-apple-system,'Apple SD Gothic Neo','Malgun Gothi
 </head>
 <body>
 <div class="wrap">
+
+  <div class="flow">
+    <span class="fc sales">매출</span><span class="op">+</span>
+    <span class="fc sup">배민지원금</span><span class="op">−</span>
+    <span class="fc cost">비용·차감</span><span class="op">±</span>
+    <span class="fc adj">조정</span><span class="op">−</span>
+    <span class="fc adj">부가세</span><span class="op">=</span>
+    <span class="fc res">입금금액</span>
+  </div>
 
   <div class="head">상세내역 — 매출·비용별</div>
   <div class="headsub">배민이 수취하는 항목과 지원·차감 내역을 항목별로 확인할 수 있어요.</div>

@@ -45,10 +45,10 @@ body{ font-family:'Pretendard',-apple-system,'Apple SD Gothic Neo','Malgun Gothi
 .g[open] .arw{ transform:rotate(180deg); }
 
 .items{ border-top:1px solid var(--line2);padding:2px 0; }
-.it{ padding:13px 18px; }
+.it{ display:flex;align-items:baseline;gap:14px;padding:12px 18px; }
 .it + .it{ border-top:1px solid var(--line2); }
-.itnm{ font-size:14px;font-weight:600;color:#2E333A;display:flex;align-items:center;flex-wrap:wrap;gap:6px; }
-.itdesc{ font-size:13px;color:var(--sub);margin-top:4px;line-height:1.55; }
+.itnm{ font-size:14px;font-weight:600;color:#2E333A;flex-shrink:0;max-width:44%;display:flex;align-items:center;flex-wrap:wrap;gap:6px; }
+.itdesc{ flex:1;font-size:13px;color:var(--sub);line-height:1.55; }
 .tags{ display:inline-flex;flex-wrap:wrap;gap:4px; }
 .tag{ font-size:10px;font-weight:600;padding:2px 6px;border-radius:4px;background:var(--peri-bg);color:var(--peri);white-space:nowrap; }
 

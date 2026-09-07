@@ -34,7 +34,7 @@ body{ font-family:'Pretendard',-apple-system,'Apple SD Gothic Neo','Malgun Gothi
 .headsub{ font-size:13px;color:var(--sub);margin-bottom:16px; }
 
 /* 그룹 카드 */
-.g{ border:1px solid var(--line);border-radius:4px;background:#fff;margin-bottom:10px;overflow:hidden; }
+.g{ border:1px solid #E4E6E8;border-radius:4px;background:#fff;margin-bottom:10px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.05); }
 .g>summary{ list-style:none;cursor:pointer;display:flex;align-items:center;gap:8px;padding:16px 18px;background:#F8F9FA; }
 .g>summary::-webkit-details-marker{display:none}
 .rb{ font-size:11px;font-weight:700;padding:2px 7px;border-radius:4px;white-space:nowrap;flex-shrink:0; }
@@ -53,9 +53,9 @@ body{ font-family:'Pretendard',-apple-system,'Apple SD Gothic Neo','Malgun Gothi
 .tag{ font-size:10px;font-weight:600;padding:2px 6px;border-radius:4px;background:var(--peri-bg);color:var(--peri);white-space:nowrap; }
 
 /* 부가세 · 입금 */
-.single{ padding:15px 18px;border:1px solid var(--line);border-radius:4px;margin-bottom:10px; }
+.single{ display:grid;grid-template-columns:150px 1fr;gap:6px 16px;align-items:baseline;padding:15px 18px;border:1px solid #E4E6E8;border-radius:4px;margin-bottom:10px;box-shadow:0 1px 3px rgba(0,0,0,0.05); }
 .single .snm{ font-weight:700;font-size:15px; }
-.single .sdesc{ font-size:13px;color:var(--sub);margin-top:4px;line-height:1.55; }
+.single .sdesc{ font-size:13px;color:var(--sub);line-height:1.55; }
 .single.res{ background:#F3F9FF;border-color:#CDE4FB; }
 .single.res .snm{ color:var(--blue); }
 .single.res .sdesc{ color:#4A7DC4; }
@@ -80,7 +80,7 @@ body{ font-family:'Pretendard',-apple-system,'Apple SD Gothic Neo','Malgun Gothi
 
   <!-- 매출 -->
   <details class="g" open>
-    <summary><span class="gnm" style="color:#2C6FE0">매출</span><span class="arw">▾</span></summary>
+    <summary><span class="gnm" style="color:#2C6FE0">매출</span><span class="arw">▼</span></summary>
     <div class="items">
       <div class="it"><div class="itnm">주문매출</div><div class="itdesc">고객이 주문한 금액이에요.</div></div>
       <div class="it"><div class="itnm">가게배달팁 매출</div><div class="itdesc">가게배달 주문에서 고객이 낸 배달팁이에요.</div></div>
@@ -91,7 +91,7 @@ body{ font-family:'Pretendard',-apple-system,'Apple SD Gothic Neo','Malgun Gothi
 
   <!-- 배민지원금 -->
   <details class="g" open>
-    <summary><span class="gnm" style="color:#5B4BC4">배민지원금</span><span class="arw">▾</span></summary>
+    <summary><span class="gnm" style="color:#5B4BC4">배민지원금</span><span class="arw">▼</span></summary>
     <div class="items">
       <div class="it"><div class="itnm">한집배달 배달비 할인</div><div class="itdesc">한집배달 주문의 배달비를 배민이 함께 부담해요.</div></div>
       <div class="it"><div class="itnm">알뜰배달 배달비 할인</div><div class="itdesc">알뜰배달 주문의 배달비를 배민이 함께 부담해요.</div></div>
@@ -104,7 +104,7 @@ body{ font-family:'Pretendard',-apple-system,'Apple SD Gothic Neo','Malgun Gothi
 
   <!-- 비용 및 차감 -->
   <details class="g" open>
-    <summary><span class="gnm" style="color:#128560">비용·차감</span><span class="arw">▾</span></summary>
+    <summary><span class="gnm" style="color:#128560">비용·차감</span><span class="arw">▼</span></summary>
     <div class="items">
       <div class="it">
         <div class="itnm">주문중개이용료</div>
@@ -131,7 +131,7 @@ body{ font-family:'Pretendard',-apple-system,'Apple SD Gothic Neo','Malgun Gothi
 
   <!-- 정산 제외 및 조정금액 -->
   <details class="g" open>
-    <summary><span class="gnm" style="color:#6B7280">정산 제외 및 조정금액</span><span class="arw">▾</span></summary>
+    <summary><span class="gnm" style="color:#6B7280">정산 제외 및 조정금액</span><span class="arw">▼</span></summary>
     <div class="items">
       <div class="it"><div class="itnm">정산 제외</div><div class="itdesc">만나서결제·부분환불 등 정산에서 제외되는 금액이에요.</div></div>
       <div class="it"><div class="itnm">광고 미수금</div><div class="itdesc">아직 납부되지 않은 광고 이용료예요.</div></div>

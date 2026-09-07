@@ -16,56 +16,49 @@
   --sup:#5B4BC4;   --sup-bg:#F1EFFB;
   --cost:#128560;  --cost-bg:#E6F6EF;
   --adj:#6B7280;   --adj-bg:#F0F1F3;
-  --peri:#5B6AD6;  --peri-bg:#ECEDFB;   /* 셀프 프로모션·상생요금제·우대수수료 */
+  --peri:#5B6AD6;  --peri-bg:#ECEDFB;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{ font-family:'Pretendard',-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif; color:var(--ink); font-size:14px; line-height:1.5; background:#fff; -webkit-font-smoothing:antialiased; }
 .wrap{ max-width:100%; }
 
-/* 수식 흐름 */
-.flow{ display:flex;flex-wrap:wrap;align-items:center;gap:6px;overflow-x:auto;padding:2px 0 18px; }
-.fc{ display:inline-block;padding:6px 11px;border-radius:6px;font-weight:700;font-size:12.5px;white-space:nowrap; }
+/* 수식 흐름 — 크게 */
+.flow{ display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px 10px;padding:6px 0 22px; }
+.fc{ display:inline-block;padding:9px 15px;border-radius:8px;font-weight:700;font-size:15.5px;white-space:nowrap; }
 .fc.sales{background:var(--sales-bg);color:var(--sales)} .fc.sup{background:var(--sup-bg);color:var(--sup)}
 .fc.cost{background:var(--cost-bg);color:var(--cost)} .fc.adj{background:var(--adj-bg);color:var(--adj)}
 .fc.res{background:#1E2A52;color:#fff}
-.op{color:#B4BAC2;font-weight:700;font-size:13px;flex-shrink:0}
+.op{color:#AAB0B8;font-weight:700;font-size:16px;flex-shrink:0}
 
-.head{ font-size:16px;font-weight:700;color:var(--ink);margin:2px 0 2px; }
-.headsub{ font-size:12.5px;color:var(--sub);margin-bottom:14px; }
+.head{ font-size:17px;font-weight:700;color:var(--ink);margin:2px 0 2px; }
+.headsub{ font-size:13px;color:var(--sub);margin-bottom:16px; }
 
 /* 그룹 카드 */
 .g{ border:1px solid var(--line);border-radius:12px;background:#fff;margin-bottom:10px;overflow:hidden; }
-.g>summary{ list-style:none;cursor:pointer;display:flex;align-items:center;gap:6px;padding:16px 18px; }
+.g>summary{ list-style:none;cursor:pointer;display:flex;align-items:center;gap:8px;padding:16px 18px; }
 .g>summary::-webkit-details-marker{display:none}
 .rb{ font-size:11px;font-weight:700;padding:2px 7px;border-radius:4px;white-space:nowrap;flex-shrink:0; }
 .rb.sales{background:var(--sales-bg);color:var(--sales)} .rb.sup{background:var(--sup-bg);color:var(--sup)}
 .rb.cost{background:var(--cost-bg);color:var(--cost)} .rb.adj{background:var(--adj-bg);color:var(--adj)}
 .gnm{ font-weight:700;font-size:15px; }
-.q{ display:inline-flex;align-items:center;justify-content:center;width:15px;height:15px;border:1px solid #CDD1D6;border-radius:50%;color:#B0B5BC;font-size:9px;font-weight:700;flex-shrink:0; }
-.gtot{ margin-left:auto;font-weight:700;font-size:15px;color:var(--ink);white-space:nowrap; }
-.arw{ font-size:12px;color:#C4C8CE;flex-shrink:0;transition:transform .15s; }
+.arw{ margin-left:auto;font-size:12px;color:#C4C8CE;flex-shrink:0;transition:transform .15s; }
 .g[open] .arw{ transform:rotate(180deg); }
 
 .items{ border-top:1px solid var(--line2);padding:2px 0; }
-.it{ display:flex;align-items:flex-start;gap:10px;padding:12px 18px; }
+.it{ padding:13px 18px; }
 .it + .it{ border-top:1px solid var(--line2); }
-.nm{ flex:1;min-width:0;font-size:14px;color:#3A3F47; }
-.tags{ display:flex;flex-wrap:wrap;gap:4px;margin-top:5px; }
+.itnm{ font-size:14px;font-weight:600;color:#2E333A;display:flex;align-items:center;flex-wrap:wrap;gap:6px; }
+.itdesc{ font-size:13px;color:var(--sub);margin-top:4px;line-height:1.55; }
+.tags{ display:inline-flex;flex-wrap:wrap;gap:4px; }
 .tag{ font-size:10px;font-weight:600;padding:2px 6px;border-radius:4px;background:var(--peri-bg);color:var(--peri);white-space:nowrap; }
-.note{ display:block;font-size:12px;color:var(--mute);margin-top:3px;line-height:1.5; }
-.lnk{ display:block;font-size:12px;color:var(--blue);font-weight:600;margin-top:4px; }
-.amw{ text-align:right;flex-shrink:0;white-space:nowrap;display:flex;align-items:flex-start;gap:4px; }
-.am{ font-size:14px;font-weight:600;color:var(--ink); }
-.am .orig{ display:block;font-size:12px;font-weight:400;color:var(--mute);text-decoration:line-through;margin-top:2px; }
-.chev{ color:#C4C8CE;font-size:13px;line-height:1.5; }
 
 /* 부가세 · 입금 */
-.single{ display:flex;align-items:center;gap:6px;padding:16px 18px;border:1px solid var(--line);border-radius:12px;margin-bottom:10px; }
+.single{ padding:15px 18px;border:1px solid var(--line);border-radius:12px;margin-bottom:10px; }
 .single .snm{ font-weight:700;font-size:15px; }
-.single .sam{ margin-left:auto;font-weight:700;font-size:15px;color:var(--ink);white-space:nowrap; }
+.single .sdesc{ font-size:13px;color:var(--sub);margin-top:4px;line-height:1.55; }
 .single.res{ background:#F3F9FF;border-color:#CDE4FB; }
 .single.res .snm{ color:var(--blue); }
-.single.res .sam{ color:var(--blue);font-size:17px; }
+.single.res .sdesc{ color:#4A7DC4; }
 
 .foot{ font-size:12px;color:var(--mute);line-height:1.6;margin-top:6px; }
 </style>
@@ -83,77 +76,77 @@ body{ font-family:'Pretendard',-apple-system,'Apple SD Gothic Neo','Malgun Gothi
   </div>
 
   <div class="head">상세내역 — 매출·비용별</div>
-  <div class="headsub">배민이 수취하는 항목과 지원·차감 내역을 항목별로 확인할 수 있어요.</div>
+  <div class="headsub">매출·지원·차감 항목이 어떤 의미인지 항목별로 확인할 수 있어요.</div>
 
   <!-- 매출 -->
   <details class="g" open>
-    <summary><span class="rb sales">매출</span><span class="gnm">매출</span><span class="q">?</span><span class="gtot">+6,303,000원</span><span class="arw">▾</span></summary>
+    <summary><span class="rb sales">매출</span><span class="gnm">매출</span><span class="arw">▾</span></summary>
     <div class="items">
-      <div class="it"><span class="nm">주문매출</span><span class="amw"><span class="am">+6,200,000원</span><span class="chev">›</span></span></div>
-      <div class="it"><span class="nm">가게배달팁 매출</span><span class="amw"><span class="am">+50,000원</span></span></div>
-      <div class="it"><span class="nm">기타매출</span><span class="amw"><span class="am">+53,000원</span></span></div>
-      <div class="it"><span class="nm">부분환불금액</span><span class="amw"><span class="am">+50,500원</span></span></div>
+      <div class="it"><div class="itnm">주문매출</div><div class="itdesc">고객이 주문한 금액이에요.</div></div>
+      <div class="it"><div class="itnm">가게배달팁 매출</div><div class="itdesc">가게배달 주문에서 고객이 낸 배달팁이에요.</div></div>
+      <div class="it"><div class="itnm">기타매출</div><div class="itdesc">그 외 발생한 매출이에요.</div></div>
+      <div class="it"><div class="itnm">부분환불금액</div><div class="itdesc">부분 취소·환불로 조정되는 금액이에요.</div></div>
     </div>
   </details>
 
   <!-- 배민지원금 -->
   <details class="g" open>
-    <summary><span class="rb sup">혜택</span><span class="gnm">배민지원금</span><span class="q">?</span><span class="gtot">+126,060원</span><span class="arw">▾</span></summary>
+    <summary><span class="rb sup">혜택</span><span class="gnm">배민지원금</span><span class="arw">▾</span></summary>
     <div class="items">
-      <div class="it"><span class="nm">한집배달 배달비 할인</span><span class="amw"><span class="am">+38,000원</span></span></div>
-      <div class="it"><span class="nm">알뜰배달 배달비 할인</span><span class="amw"><span class="am">+24,000원</span></span></div>
-      <div class="it"><span class="nm">배민배달비 지원</span><span class="amw"><span class="am">+20,000원</span><span class="chev">›</span></span></div>
-      <div class="it"><span class="nm">배민클럽 지원</span><span class="amw"><span class="am">+18,000원</span></span></div>
-      <div class="it"><span class="nm">광고 프로모션</span><span class="amw"><span class="am">+15,000원</span></span></div>
-      <div class="it"><span class="nm">신규 온라인 입점 지원</span><span class="amw"><span class="am">+11,060원</span></span></div>
+      <div class="it"><div class="itnm">한집배달 배달비 할인</div><div class="itdesc">한집배달 주문의 배달비를 배민이 함께 부담해요.</div></div>
+      <div class="it"><div class="itnm">알뜰배달 배달비 할인</div><div class="itdesc">알뜰배달 주문의 배달비를 배민이 함께 부담해요.</div></div>
+      <div class="it"><div class="itnm">배민배달비 지원</div><div class="itdesc">배민배달비 중 배민이 함께 부담하는 금액이에요.</div></div>
+      <div class="it"><div class="itnm">배민클럽 지원</div><div class="itdesc">배민클럽 이용 주문에 배민이 지원하는 금액이에요.</div></div>
+      <div class="it"><div class="itnm">광고 프로모션</div><div class="itdesc">광고비 관련 배민 프로모션 지원이에요.</div></div>
+      <div class="it"><div class="itnm">신규 온라인 입점 지원</div><div class="itdesc">신규로 입점한 파트너님께 제공하는 지원이에요.</div></div>
     </div>
   </details>
 
   <!-- 비용 및 차감 -->
   <details class="g" open>
-    <summary><span class="rb cost">차감</span><span class="gnm">비용 및 차감</span><span class="q">?</span><span class="gtot">−1,776,744원</span><span class="arw">▾</span></summary>
+    <summary><span class="rb cost">차감</span><span class="gnm">비용 및 차감</span><span class="arw">▾</span></summary>
     <div class="items">
       <div class="it">
-        <span class="nm">주문중개이용료<span class="tags"><span class="tag">프로모션</span><span class="tag">상생요금제</span></span></span>
-        <span class="amw"><span class="am">−386,200원<span class="orig">−418,000원</span></span><span class="chev">›</span></span>
+        <div class="itnm">주문중개이용료<span class="tags"><span class="tag">프로모션</span><span class="tag">상생요금제</span></span></div>
+        <div class="itdesc">배민에서 배민배달을 이용하면서 발생한 중개이용료에요.</div>
       </div>
       <div class="it">
-        <span class="nm">결제정산수수료<span class="tags"><span class="tag">우대수수료</span></span></span>
-        <span class="amw"><span class="am">−117,363원</span><span class="chev">›</span></span>
+        <div class="itnm">결제정산수수료<span class="tags"><span class="tag">우대수수료</span></span></div>
+        <div class="itdesc">카드·간편결제와 정산 처리에 드는 비용이에요.</div>
       </div>
       <div class="it">
-        <span class="nm">배민배달비<span class="tags"><span class="tag">프로모션</span><span class="tag">상생요금제</span></span></span>
-        <span class="amw"><span class="am">−472,700원<span class="orig">−520,000원</span></span><span class="chev">›</span></span>
+        <div class="itnm">배민배달비<span class="tags"><span class="tag">프로모션</span><span class="tag">상생요금제</span></span></div>
+        <div class="itdesc">알뜰·한집배달 주문의 배달에 쓰이는 비용이에요.</div>
       </div>
       <div class="it">
-        <span class="nm">할인·마케팅 비용<span class="note">파트너님이 설정한 할인 비용 부담분</span></span>
-        <span class="amw"><span class="am">−655,481원</span><span class="chev">›</span></span>
+        <div class="itnm">할인·마케팅 비용</div>
+        <div class="itdesc">파트너님이 고객에게 제공한 할인 중 파트너님 부담분이에요.</div>
       </div>
       <div class="it">
-        <span class="nm">우리가게클릭<span class="lnk">광고효과 ›</span></span>
-        <span class="amw"><span class="am">−145,000원</span><span class="chev">›</span></span>
+        <div class="itnm">우리가게클릭</div>
+        <div class="itdesc">파트너님이 직접 설정해 집행한 광고 이용료에요.</div>
       </div>
     </div>
   </details>
 
   <!-- 정산 제외 및 조정금액 -->
   <details class="g" open>
-    <summary><span class="rb adj">조정</span><span class="gnm">정산 제외 및 조정금액</span><span class="q">?</span><span class="gtot">−332,155원</span><span class="arw">▾</span></summary>
+    <summary><span class="rb adj">조정</span><span class="gnm">정산 제외 및 조정금액</span><span class="arw">▾</span></summary>
     <div class="items">
-      <div class="it"><span class="nm">정산 제외<span class="note">만나서결제·부분환불 등 정산에서 제외되는 금액</span></span><span class="amw"><span class="am">−344,973원</span><span class="chev">›</span></span></div>
-      <div class="it"><span class="nm">광고 미수금</span><span class="amw"><span class="am">−20,000원</span></span></div>
-      <div class="it"><span class="nm">손실 환급</span><span class="amw"><span class="am">+12,800원</span></span></div>
-      <div class="it"><span class="nm">보정금액</span><span class="amw"><span class="am">+20,000원</span><span class="chev">›</span></span></div>
+      <div class="it"><div class="itnm">정산 제외</div><div class="itdesc">만나서결제·부분환불 등 정산에서 제외되는 금액이에요.</div></div>
+      <div class="it"><div class="itnm">광고 미수금</div><div class="itdesc">아직 납부되지 않은 광고 이용료예요.</div></div>
+      <div class="it"><div class="itnm">손실 환급</div><div class="itdesc">오류·손실 등으로 환급되는 금액이에요.</div></div>
+      <div class="it"><div class="itnm">보정금액</div><div class="itdesc">정산 보정으로 증감(±)되는 금액이에요.</div></div>
     </div>
   </details>
 
   <!-- 부가세 -->
-  <div class="single"><span class="snm">부가세</span><span class="q">?</span><span class="sam">−126,060원</span></div>
+  <div class="single"><div class="snm">부가세</div><div class="sdesc">거래로 발생한 부가세예요.</div></div>
 
   <!-- 입금 금액 -->
-  <div class="single res"><span class="snm">입금 금액</span><span class="sam">4,175,192원</span></div>
+  <div class="single res"><div class="snm">입금 금액</div><div class="sdesc">위 항목을 모두 반영해 실제 입금되는 최종 금액이에요.</div></div>
 
-  <p class="foot">※ 예시 화면입니다. 이용 중인 광고·서비스와 지원 내역에 따라 항목·금액은 달라질 수 있어요.</p>
+  <p class="foot">※ 이용 중인 광고·서비스와 지원 내역에 따라 표시되는 항목은 달라질 수 있어요.</p>
 
 </div>
 </body>
